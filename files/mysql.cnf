@@ -124,11 +124,9 @@ innodb_flush_log_at_trx_commit = 1
 sync_binlog		= 1
 
 max_connections         = 200
-{% if salt['pillar.get']('mysql:server_id', False) %}
-server-id		= {{ pillar['mysql']['server_id'] }}
-{% endif %}
+server-id		= {{ grains['server_id'] }}
 
-{% if salt['pillar.get']('mysql:master', False) %}
+{% if 'db-master' in grains.get('roles', []) %}
 log-bin			= mysql-bin
 {% endif %}
 
